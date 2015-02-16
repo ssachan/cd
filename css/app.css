@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 300;
+    src: url(../fonts/kcf5uOXucLcbFOydGU24WALUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+}
+@font-face {
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    src: url(../fonts/qdgUG4U09HnJwhYI-uK18wLUuEpTyoUstqEm5AMlJo4.woff) format('woff');
+}
+body {
+    font-family: 'Lato', sans-serif;
+}
+h4 {
+    margin-top: 0px !important;
+    font-weight: 700;
+    font-size: 18px
+}
+.bar-main {
+    background-color: #000 !important;
+}
+.bar-main h1 {
+    color: #fff;
+}
+.badge {
+    padding: 8px !important;
+    color: white;
+    background-color: green;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+.media-body {
+    margin-top: 0;
+    font-size: 22px;
+    color: #000;
+    line-height: 1.4;
+}
+.source {
+    font-size: 18px;
+    color: #777;
+    margin-top: 5px;
+}
+.icon-circle {
+    border-radius: 50%;
+    padding: 13px 15px;
+    margin-top: 0px;
+    color: #666;
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: 100;
+    background-color: rgba(0,0,0,.05);
+}
+.media .icon {
+    margin-left: 7px;
+}
+#cid .table-view {
+    border-bottom: 0px;
+}
+#cid .table-view-cell {
+    padding: 10px 20px 20px 20px !important;
+}
+.slider {
+    margin-bottom: 0;
+    background-color: #fff !important;
+}
+.slider .slide-group .slide {
+    white-space: normal;
+}
+#settingsModal .table-view {
+    margin-top: 0px !important;
+}
+.error {
+    font-weight: 100;
+    padding: 50px;
+    font-size: 30px;
+    line-height: 1.2
+}
+.load {
+    text-align: center;
+    padding-top: 25%;
+}
+.input-group {
+    margin-top: 15px;
+    border-top: 1px solid #ddd;
+}
+.splash{
+    background-image: url('../img/lander.png');
+    background-size: 100% 100%;
+}
+.splash h1{
+    text-align: center;
+    color: white;
+    font-weight: normal;
+}
+.gp{
+    width:80% !important;
+    position: fixed;
+    bottom: 20%;
+    left: 10%;
+    font-size: 20px;
+}
+
+.saved {
+background: url('../img/sprite.png') no-repeat -38px -36px !important;
+background-size: 70px !important;
+}
+
+.savelist {
+background: url('../img/sprite.png') no-repeat -38px 0px;
+display: inline-block;
+width: 35px;
+height: 35px;
+background-size: 70px;
+}
+
+.whatsapp:hover {
+background: url('../img/sprite.png') no-repeat 0px -36px;
+background-size: 70px;
+}
+
+.whatsapp {
+background: url('../img/sprite.png') no-repeat 0px 0px;
+display: inline-block;
+width: 35px;
+height: 35px;
+background-size: 70px;
+}
+
+.logo{
+    vertical-align: middle;
+    height: 33px;
+}
+
+.icon-right-nav{
+position: fixed !important;
+top: 40% !important;
+right: 1% !important;
+z-index:10;
+}
+
+.icon-left-nav{
+position: fixed !important;
+top: 40% !important;
+left: 1% !important;
+z-index:10;
+}
+
+.fb{
+    padding: 20px
+}
+h3.msg{
+    font-weight: normal;
+    padding: 25px 25px 0px;
+    line-height: 1.3;
+}
