@@ -70,6 +70,31 @@ var app = {
         document.addEventListener(env.ev, this.onDeviceReady, false);
     },
 
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
+    onDeviceReady: function() {
+        FastClick.attach(document.body);
+        window.addEventListener('push', app.onPush);
+        //app.trySilentLogin();
+        //app.buildPage('index.html');
+        app.renderSplashScreen();
+        //$('.savelist').on("touchend", app.addToSavedList);        
+        //app.onLogin({'displayName':'hhe','email':'emd','fn':'cc'});
+        lastId = localStorage.getItem("lastId");
+
+        var savedBitesArray = JSON.parse(localStorage.getItem("savedBites"));
+        if (savedBitesArray != null) {
+            var len = savedBitesArray.length;
+            for (var i = 0; i < len; i++) {
+                var bite = new Bite(savedBitesArray[i].id, savedBitesArray[i].post_title, savedBitesArray[i].post_content, savedBitesArray[i].category, savedBitesArray[i].link);
+                savedBites.add(bite);
+            }
+        }
+        window.analytics.startTrackerWithId('UA-59384961-1');
+    },
+
     safe_tags_regex: function(str) {
         var text = str.replace(/(<([^>]+)>)/ig, "");
         text = encodeURI(text);
@@ -145,32 +170,6 @@ var app = {
         slider.parentNode.dispatchEvent(e);*/
     },
 
-    // deviceready Event Handler
-    //
-    // The scope of 'this' is the event. In order to call the 'receivedEvent'
-    // function, we must explicitly call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
-        FastClick.attach(document.body);
-        //document.querySelector('#sd').addEventListener('slide', this.onSlide);
-        window.addEventListener('push', app.onPush);
-        //app.renderSplashScreen();
-        //app.trySilentLogin();
-        //app.onLogin({'displayName':'hhe','email':'emd','fn':'cc'});
-        app.buildPage('index.html');
-        //$('.savelist').on("touchend", app.addToSavedList);        
-        lastId = localStorage.getItem("lastId");
-
-        var savedBitesArray = JSON.parse(localStorage.getItem("savedBites"));
-        if (savedBitesArray != null) {
-            var len = savedBitesArray.length;
-            for (var i = 0; i < len; i++) {
-                var bite = new Bite(savedBitesArray[i].id, savedBitesArray[i].post_title, savedBitesArray[i].post_content, savedBitesArray[i].category, savedBitesArray[i].link);
-                savedBites.add(bite);
-            }
-        }
-        window.analytics.startTrackerWithId('UA-59384961-1');
-    },
-
     onFeedbackSumbit: function(e) {
         event.preventDefault();
         $.ajax({
@@ -180,7 +179,10 @@ var app = {
                 'email': localStorage.getItem("email"),
                 'feedback': $('#feedback-area').val()
             },
-            success: app.success
+            success: function() {
+                $('#feedback-area').val('');
+                $('.successmsg').show();
+            }
         })
     },
 
@@ -191,14 +193,14 @@ var app = {
 
     buildPage: function(requestURL) {
         if (requestURL.indexOf("savedlist.html") > -1) {
+            //document.getElementById('slide-right').addEventListener('touchend', app.onTouchEnd);
+            //document.getElementById('slide-left').addEventListener('touchend', app.onTouchEnd);
             app.getSavedBites();
-            document.getElementById('slide-right').addEventListener('touchend', app.onTouchEnd);
-            document.getElementById('slide-left').addEventListener('touchend', app.onTouchEnd);
             app.resetSlideNumber();
             window.analytics.trackView('Bookmarked');
         } else if (requestURL.indexOf("index.html") > -1) {
-            document.getElementById('slide-right').addEventListener('touchend', app.onTouchEnd);
-            document.getElementById('slide-left').addEventListener('touchend', app.onTouchEnd);
+            //document.getElementById('slide-right').addEventListener('touchend', app.onTouchEnd);
+            //document.getElementById('slide-left').addEventListener('touchend', app.onTouchEnd);
             app.getNewBites();
             app.resetSlideNumber();
             window.analytics.trackView('Latest');
@@ -232,7 +234,7 @@ var app = {
         } else {
             html += '<a class="icon pull-right savelist" id="' + bite.id + '" onClick="app.addToSavedList(\'' + bite.id + '\'); window.analytics.trackEvent(\'Bookmark\', \'touch\', \'id-' + bite.id + '\');"></a>';
         }
-        html += '<a class="icon whatsapp pull-right" onclick="window.plugins.socialsharing.shareViaWhatsApp(\'' + app.safe_tags_regex(bite.post_content) + '\', null, \'' + bite.link + '\', function() {console.log(\'share ok\')}, function(errormsg){alert(errormsg)}); window.analytics.trackEvent(\'WhatsApp Share\', \'touch\', \'id-'+bite.id+'\');"></a></h4>';
+        html += '<a class="icon whatsapp pull-right" onclick="window.plugins.socialsharing.shareViaWhatsApp(\'' + app.safe_tags_regex(bite.post_content) + '\', null, \'' + bite.link + '\', function() {console.log(\'share ok\')}, function(errormsg){alert(errormsg)}); window.analytics.trackEvent(\'WhatsApp Share\', \'touch\', \'id-' + bite.id + '\');"></a></h4>';
         html += '<h3>' + bite.post_title + '</h3>' + bite.post_content;
         if (bite.link != null) {
             html += '<div class="source">Source: <a href="' + bite.link + '" data-ignore="push">' + app.parseSourceName(bite.link) + '</a></div>';
@@ -255,6 +257,7 @@ var app = {
     },
 
     renderLoading: function() {
+        $('.content').removeClass('splash');
         document.getElementById('cid').innerHTML = '<div class="load"><img src="img/load.gif" /></div>'
     },
 
@@ -316,7 +319,7 @@ var app = {
     getSavedBites: function() {
         var savedBitesArray = savedBites.getAll();
         if (savedBitesArray.length <= 0) {
-            app.renderErrorMsg('You haven\'t saved anything for later read. Touch <span class="icon icon-home icon-circle"></span> icon to build your save list. <a href="index.html">Start Reading</a>');
+            app.renderErrorMsg('You haven\'t saved anything for later read. Touch <span class="icon savelist" style="vertical-align: middle !important; "></span> icon to build your save list. <a href="index.html">Continue Reading</a>');
             return;
         }
         app.renderSlides(savedBitesArray);
@@ -334,7 +337,8 @@ var app = {
         })
         app.buildPage('index.html');
     },
-    success: function() {
+    success: function(e) {
+
         //do nothing
     },
     login: function() {

@@ -40,8 +40,8 @@
     </header>
     <div class="content" id="cid">
     </div>
-    <span class="icon icon-right-nav pull-right" style="display:none" id="slide-right"></span>
-    <span class="icon icon-left-nav pull-right" style="display:none" id="slide-left"></span>
+    <span class="icon icon-right-nav icon-circle pull-right" style="display:none" id="slide-right"></span>
+    <span class="icon icon-left-nav icon-circle pull-right" style="display:none" id="slide-left"></span>
 
     <!-- legend popover -->
     <div id="popoverLegend" class="popover">
@@ -82,15 +82,14 @@
             <div class="profile">
                 <h4 class="content-padded">Profile</h4>
                 <form class="input-group">
-                    <input type="text" placeholder="Full name" id="fn">
-                    <input type="email" placeholder="Email" id="email">
+                    <input type="text" placeholder="Full name" id="fn" disabled>
+                    <input type="email" placeholder="Email" id="email" disabled>
                 </form>
             </div>
             <ul class="table-view">
                 <li class="table-view-cell media">
-                    <a class="navigate-right" onClick="app.logout()">
-                        <div class="media-body">Sign Out</div>
-                    </a>
+                    <div class="media-body">Unread List <span class="badge badge-primary">coming soon</span>
+                    </div>
                 </li>
             </ul>
         </div>

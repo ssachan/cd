@@ -40,6 +40,7 @@
     </header>
     <div class="content" id="cid">
         <h3 class="msg">Additional feature requests, suggestions, anything that can make us help you prepare better. </h3>
+        <button class="btn btn-positive btn-block btn-outlined successmsg"> Thanks for your feedback. We'll be on it ASAP. </button> 
         <form class="fb">
             <textarea rows="5" id="feedback-area"></textarea>
             <button class="btn btn-positive btn-block" id="submit">Submit</button>
@@ -85,15 +86,13 @@
             <div class="profile">
                 <h4 class="content-padded">Profile</h4>
                 <form class="input-group">
-                    <input type="text" placeholder="Full name" id="fn">
-                    <input type="email" placeholder="Email" id="email">
+                    <input type="text" placeholder="Full name" id="fn" disabled>
+                    <input type="email" placeholder="Email" id="email" disabled>
                 </form>
             </div>
             <ul class="table-view">
                 <li class="table-view-cell media">
-                    <a class="navigate-right" onClick="app.logout()">
-                        <div class="media-body">Sign Out</div>
-                    </a>
+                        <div class="media-body">Unread List <span class="badge badge-primary">coming soon</span></div>
                 </li>
             </ul>
         </div>
