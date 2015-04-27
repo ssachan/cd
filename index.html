@@ -11,6 +11,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <link href="css/ratchet.css" rel="stylesheet">
+    <!--<link href="ratchet/ratchet-theme-android.css" rel="stylesheet">-->
 </head>
 
 <body>
@@ -20,22 +21,6 @@
         <h1 class="title"><img src="img/cd-w.png" class="logo"></h1>
     </header>
     <div class="content" id="cid"></div>
-
-    <div id="popoverLegend" class="popover">
-        <header class="bar bar-nav">
-            <h1 class="title">Legend</h1>
-        </header>
-        <ul class="table-view">
-            <li class="table-view-cell">Item1</li>
-            <li class="table-view-cell">Item2</li>
-            <li class="table-view-cell">Item3</li>
-            <li class="table-view-cell">Item4</li>
-            <li class="table-view-cell">Item5</li>
-            <li class="table-view-cell">Item6</li>
-            <li class="table-view-cell">Item7</li>
-            <li class="table-view-cell">Item8</li>
-        </ul>
-    </div>
 
     <div id="settingsModal" class="modal">
         <header class="bar bar-nav bar-main">
@@ -51,7 +36,7 @@
                 </li>
             </ul>
             <div class="profile">
-                <h4 class="content-padded">Profile</h4>
+                <h4>Profile</h4>
                 <form class="input-group">
                     <input type="text" placeholder="Rini Roy" id="fn" disabled="">
                     <input type="email" placeholder="r.roy@outlook.in" id="email" disabled="">
@@ -60,7 +45,32 @@
         </div>
         <!-- /.modal -->
     </div>
-    <script type="text/javascript" src="cordova.js"></script>
+    <div id="popover" class="popover popover-filter">
+        <div class="content-padded">
+            Filters
+            <ul class="table-view">
+                <li class="table-view-cell">
+                    Economics
+                    <div class="toggle">
+                        <div class="toggle-handle"></div>
+                    </div>
+                </li>
+                <li class="table-view-cell">
+                    Item 2
+                    <div class="toggle active">
+                        <div class="toggle-handle"></div>
+                    </div>
+                </li>
+                <li class="table-view-cell">
+                    Item 3
+                    <div class="toggle">
+                        <div class="toggle-handle"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
     <script type="text/javascript" src="lib/zepto.min.js"></script>
     <script type="text/javascript" src="lib/callbacks.js"></script>
     <script type="text/javascript" src="lib/deferred.js"></script>

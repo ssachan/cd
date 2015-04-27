@@ -2,7 +2,7 @@ app.views.BiteListView = Backbone.View.extend({
 
     tagName: 'ul',
 
-    className: 'table-view',
+    className: 'table-view bitelist',
 
     initialize: function() {
         var self = this;
@@ -20,9 +20,17 @@ app.views.BiteListView = Backbone.View.extend({
                 model: bite
             }).render().el);
         }, this);
-
-        this.$el.append('<li class="table-view-divider"><button id="loadPrevious" class="btn btn-primary">Load Previous</button><span id="loadPreviousErr" class="badge" style="margin-left: 20px;display:none">No more old bites!</span></li>');
+        this.$el.append('<li class="table-view-divider" id="previouswrapper"><button id="loadPrevious" class="btn btn-primary">Load Previous</button><span id="loadPreviousErr" class="badge" style="margin-left: 10px;display:none">No more old bites!</span></li>');
         return this;
+    },
+
+    renderList: function(collection){
+        $('.bitelist>.table-view-cell').remove(); 
+        _.each(collection.models, function(bite) {
+            this.$el.append(new app.views.BiteListItemView({
+                model: bite
+            }).render().el);
+        }, this);
     },
 
     events: {
@@ -30,18 +38,24 @@ app.views.BiteListView = Backbone.View.extend({
         "touchend #loadPrevious": "loadPrevious",
         "touchend #font-small": "toggleFontSizeToSmall",
         "touchend #font-large": "toggleFontSizeToLarge",
+        "keyup #text-search": "textSearch",
+    },
+
+    textSearch: function() {
+        var letters = $("#text-search").val();
+        this.renderList(this.model.textSearch(letters));
     },
 
     loadLatest: function() {
         this.model.fetchLatest();
-        window.analytics.trackEvent('LatestButton', 'touch', 'user-' + localStorage.getItem('email'));
+        window.analytics.trackEvent('LatestButton', 'user-' + localStorage.getItem('email'), localStorage.getItem('maxDate'));
     },
 
     loadPrevious: function() {
         this.model.fetchPrevious();
-        window.analytics.trackEvent('PreviousButton', 'touch', 'user-' + localStorage.getItem('email'));
-
+        window.analytics.trackEvent('PreviousButton', 'user-' + localStorage.getItem('email'), localStorage.getItem('minDate'));
     },
+
     toggleFontSizeToSmall: function(e) {
         e.preventDefault()
         if (localStorage.getItem('fs') == 'small') {

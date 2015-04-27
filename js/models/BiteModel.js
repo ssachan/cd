@@ -24,7 +24,6 @@ app.models.Account = Backbone.Model.extend({
 
     success: function(e) {
         //do nothing
-
     },
 
     login: function() {
@@ -77,7 +76,22 @@ app.models.Bite = Backbone.Model.extend({
             "timesofindia": "The Times Of India",
             "bbc.com": "BBC",
             "business-standard.com": "Business Standard",
-            "indianexpress.com": "The Indian Express"
+            "indianexpress.com": "The Indian Express",
+            "mrunal.org": "Mrunal",
+            "gktoday.in": "GKToday",
+            "insightsonindia.com": "Insights",
+            "hindustantimes.com": "HT",
+            "http://pib.nic.in" : "PIB",
+            "http://en.wikipedia.org": "Wiki",
+            "nytimes.com": "NYT",
+            "ccrtindia.gov.in": "ccrt",
+            "thediplomat.com": "The Diplomat",
+            "downtoearth.org.in": "Down to Earth",
+            "idsa.in": "idsa",
+            "frontline.in": "Frontline",
+            "business-standard.com": "Business Stan",
+            "thehindubusinessline.com": "The Hindu BL",
+            "livemint.com": "Live Mint"
         };
         for (str in sourceMap) {
             if (link != null && link.indexOf(str) > -1) {
@@ -108,14 +122,17 @@ app.models.Bite = Backbone.Model.extend({
             "pib": 'badge-pib',
             "insights": 'badge-insights',
             "upsc": 'badge-upsc',
+            "civils": 'badge-civils'
         }
         if (tagClassMap[tag] != null) {
             return tagClassMap[tag];
         }
-        return 'badge-primary'
+        return 'badge-primary';
     },
 
     initialize: function() {
+        if(!this.get('discuss'))
+            this.set('discuss', null);
         this.set('ccolor', this.categoryColorMap[this.get('category')]);
         this.set('tagclass', this.tagToClassName(this.get('tags')));
         this.set('source', this.parseSourceName(this.get('link')));
@@ -135,7 +152,6 @@ app.models.Bite = Backbone.Model.extend({
             model.save();
         });
     }
-
 });
 
 app.models.BiteCollection = Backbone.Collection.extend({
@@ -246,6 +262,15 @@ app.models.BiteCollection = Backbone.Collection.extend({
                 self.error(xhr, msg, url);
             }
         });
+    },
+
+    textSearch : function(letters){
+        if(letters == "") return this;
+        var pattern = new RegExp(letters,"gi");
+        var filteredList = _(this.filter(function(data) {
+            return pattern.test(data.get("post_title"));
+        }));
+        return new app.models.BiteCollection(filteredList.__wrapped__);
     }
 });
 
